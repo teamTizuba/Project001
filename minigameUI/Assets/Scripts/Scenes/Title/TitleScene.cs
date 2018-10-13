@@ -16,7 +16,7 @@ public class TitleScene : MonoBehaviour {
 
 		if( MyInput.GetInstance().IsTouchTrigger() )
 		{
-			SystemManager.GetInstance().LoadScene( "ResultScene" );
+			SystemManager.GetInstance().LoadScene( "GameMainScene" );
 		}
 	}
 

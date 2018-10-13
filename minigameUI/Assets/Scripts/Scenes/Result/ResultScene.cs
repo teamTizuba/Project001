@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class ResultScene : MonoBehaviour {
 
+	public class ReusltData : SceneData
+	{
+		public bool _IsComplete;
+		public List<float> _secondList;
+	}
+
+	ReusltData _reusltData;
+
+	ResultUI _resultUI = new ResultUI();
+
 	// Use this for initialization
 	void Start () {
-		
+		_reusltData = SystemManager.GetInstance().GetSceneData() as ReusltData;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		SystemManager.GetInstance().Update();
-
-		if( MyInput.GetInstance().IsTouchRelease() )
-		{
-			SystemManager.GetInstance().LoadScene( "TitleScene" );
-		}
+		_resultUI.Update();
 	}
 }

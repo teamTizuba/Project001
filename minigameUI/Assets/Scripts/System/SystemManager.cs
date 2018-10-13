@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class SystemManager : Singleton<SystemManager>
 {
+	SceneData _sceneData;
+
 	protected override bool IsAddManager()
 	{
 		return false;
@@ -14,6 +16,16 @@ public class SystemManager : Singleton<SystemManager>
 	public void Update()
 	{
 		MyInput.GetInstance().Update();
+	}
+
+	public void SetSceneData( SceneData sceneData )
+	{
+		_sceneData = sceneData;
+	}
+
+	public SceneData GetSceneData()
+	{
+		return _sceneData;
 	}
 
 	public void LoadScene( string sceneName )
