@@ -22,7 +22,6 @@ public class GameMainScene : MonoBehaviour
 	Image m_win;
 	Image m_lose;
 	Image m_ready;
-	bool m_isWin = false;
 	int m_charaIndex = 0;
 	ResultScene.ReusltData m_resultData = new ResultScene.ReusltData();
 
@@ -92,9 +91,10 @@ public class GameMainScene : MonoBehaviour
 	void UpdateButtle()
 	{
 		bool isEnd = false;
+		bool isWin = false;
 		m_timer += Time.deltaTime;
 		if (MyInput.GetInstance().IsTouchTrigger()) {
-			m_isWin = true;
+			isWin = true;
 			isEnd = true;
 		} else if (m_timer >= m_timeLimit) {
 			isEnd = true;
@@ -103,8 +103,7 @@ public class GameMainScene : MonoBehaviour
 		if (isEnd) {
 			m_mychara.transform.localPosition = new Vector3(m_mychara.transform.localPosition.x, 200f, m_mychara.transform.localPosition.z);
 			m_enemy.transform.localPosition = new Vector3(m_mychara.transform.localPosition.x, -150f, m_mychara.transform.localPosition.z);
-			m_timeLimit = 5.0f;
-			if (m_isWin) {
+			if (isWin) {
 				m_resultData._secondList.Add(m_timer);
 				m_win.gameObject.SetActive(true);
 			} else {
@@ -112,6 +111,8 @@ public class GameMainScene : MonoBehaviour
 			}
 			m_action.gameObject.SetActive(false);
 			m_charaIndex++;
+			m_timer = 0f;
+			m_timeLimit = 5.0f;
 			m_state = eState.End;
 		}
 	}
