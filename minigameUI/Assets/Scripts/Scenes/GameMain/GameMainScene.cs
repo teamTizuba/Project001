@@ -121,8 +121,8 @@ public class GameMainScene : MonoBehaviour
 		if (m_timer >= m_timeLimit) {
 			if(m_charaIndex >= GameData.dataArray.Length || m_resultData._secondList.Count!=m_charaIndex) {
 				m_resultData._IsComplete = m_resultData._secondList.Count == m_charaIndex;
-				UnityEngine.SceneManagement.SceneManager.LoadScene("ResultScene");
 				SystemManager.GetInstance().SetSceneData(m_resultData);
+				SystemManager.GetInstance().LoadScene("ResultScene");
 			} else {
 				m_win.gameObject.SetActive(false);
 				m_lose.gameObject.SetActive(false);
