@@ -16,7 +16,9 @@ public class ResultScene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		_reusltData = SystemManager.GetInstance().GetSceneData() as ReusltData;
+		var reusltData = SystemManager.GetInstance().GetSceneData() as ReusltData;
+
+		_resultUI.Init( this , reusltData );
 	}
 	
 	// Update is called once per frame
