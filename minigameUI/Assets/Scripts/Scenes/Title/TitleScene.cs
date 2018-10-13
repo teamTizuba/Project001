@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleScene : MonoBehaviour {
 
@@ -11,8 +12,11 @@ public class TitleScene : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if( MyInput.IsTouch() )
+		SystemManager.GetInstance().Update();
+
+		if( MyInput.GetInstance().IsTouchTrigger() )
 		{
+			SystemManager.GetInstance().LoadScene( "ResultScene" );
 		}
 	}
 

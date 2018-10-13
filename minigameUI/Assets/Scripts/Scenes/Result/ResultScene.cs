@@ -11,6 +11,11 @@ public class ResultScene : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		SystemManager.GetInstance().Update();
+
+		if( MyInput.GetInstance().IsTouchRelease() )
+		{
+			SystemManager.GetInstance().LoadScene( "TitleScene" );
+		}
 	}
 }

@@ -1,22 +1,73 @@
 ﻿using UnityEngine;
 
-static public class MyInput
+public class MyInput : Singleton<MyInput>
 {
-	static public bool IsTouch()
+	bool _isPress = false;
+	bool _isTrigger = false;
+	bool _isRelease = false;
+
+	public void Update()
 	{
-		if( Input.touchCount > 0 )
+		bool isPressNext = false;
+
+		if( IsSmartPhone() )
 		{
-			return true;
+			if( Input.touchCount > 0 )
+			{
+				isPressNext = true;
+			}
+			isPressNext = false;
+		} else
+		{
+			//PC
+			isPressNext = Input.GetMouseButton( 0 );
 		}
-		return false;
+
+		_isTrigger = ((!_isPress) && isPressNext);
+		_isRelease = (_isPress && ( ! isPressNext) );
+		_isPress = isPressNext;
 	}
 
-	static public bool GetTouchPos( out Vector2 pos )
+
+	bool IsSmartPhone()
 	{
-		if( Input.touchCount > 0 )
+		return Application.platform == RuntimePlatform.Android ||
+			Application.platform == RuntimePlatform.IPhonePlayer;
+
+	}
+
+	public bool IsTouch()
+	{
+		return _isPress;
+	}
+
+	public bool IsTouchTrigger()
+	{
+		return _isTrigger;
+	}
+
+	public bool IsTouchRelease()
+	{
+		return _isRelease;
+	}
+
+
+	public bool GetTouchPos( out Vector2 pos )
+	{
+		if( IsSmartPhone() )
 		{
-			pos = Input.GetTouch( 0 ).position;
-			return true;
+			if( Input.touchCount > 0 )
+			{
+				pos = Input.GetTouch( 0 ).position;
+				return true;
+			}
+		} else
+		{
+			if( Input.GetMouseButton( 0 ) )
+			{
+				pos = Input.mousePosition;
+				return true;
+			}
 		}
 
 		pos = new Vector2();
