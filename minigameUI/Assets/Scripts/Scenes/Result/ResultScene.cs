@@ -6,8 +6,8 @@ public class ResultScene : MonoBehaviour {
 
 	public class ReusltData : SceneData
 	{
-		public bool _IsComplete;
-		public List<float> _secondList;
+		public bool _IsComplete = false;
+		public List<float> _secondList = new List<float>();
 	}
 
 	ReusltData _reusltData;
