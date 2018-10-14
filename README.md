@@ -17,7 +17,20 @@ GitHubの設定・Unityの初期設定・作業分担し制作・ストアにア
     - GitHubの設定
     - ゲームメイン
     - Googleストアの調査  
+    - 素材集め  
 - くに
     - ゲームタイトル
     - リザルト
     - 入力
+
+# 素材
+- 画像  
+    - 動物  
+        https://frame-illust.com/
+    - ビックリマーク  
+        https://illustimage.com/
+- サウンド
+    - BGM  
+        http://www.hmix.net/
+    - ビックリマーク・敵が飛んでいく・フライング  
+        http://www.kurage-kosho.info/

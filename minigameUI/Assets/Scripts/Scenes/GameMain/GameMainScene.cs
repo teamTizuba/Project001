@@ -28,6 +28,10 @@ public class GameMainScene : MonoBehaviour
 	Text m_gameTimeText;
 	int m_charaIndex = 0;
 	ResultScene.ReusltData m_resultData = new ResultScene.ReusltData();
+	AudioSource m_seAction = null;
+	AudioSource m_seAttack = null;
+	AudioSource m_seTimeDown = null;
+	AudioSource m_bgm = null;
 
 	// Use this for initialization
 	void Start()
@@ -44,6 +48,11 @@ public class GameMainScene : MonoBehaviour
 		m_downTimeObj = canvas.transform.Find("DownTime").gameObject;
 		m_downTimeAnim = m_downTimeObj.GetComponent<Animation>();
 		m_charaIndex = Random.RandomRange(0, GameData.dataArray.Length);
+		var audio = GameObject.Find("Audio").transform;
+		m_seAction = audio.Find("SEAction").GetComponent<AudioSource>();
+		m_seAttack = audio.Find("SEAttack").GetComponent<AudioSource>();
+		m_seTimeDown = audio.Find("SETimeDown").GetComponent<AudioSource>();
+		m_bgm = audio.Find("BGM").GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
@@ -106,6 +115,7 @@ public class GameMainScene : MonoBehaviour
 	{
 		m_timer += Time.deltaTime;
 		if (m_timer >= m_timeLimit) {
+			m_seAction.Play();
 			m_action.gameObject.SetActive(true);
 			m_state = eState.Buttle;
 			m_timer = 0f;
@@ -120,6 +130,7 @@ public class GameMainScene : MonoBehaviour
 	{
 		m_timer += Time.deltaTime;
 		if (MyInput.GetInstance().IsTouchTrigger()) {
+			m_seAttack.Play();
 			m_mycharaAnimation.Play("MyCharaAttack");
 			m_enemyAnimation.Play("EnemyDown");
 			m_action.gameObject.SetActive(false);
@@ -151,5 +162,6 @@ public class GameMainScene : MonoBehaviour
 		m_gameTime -= 5f;
 		m_downTimeObj.active = true;
 		m_downTimeAnim.Play("DownTime");
+		m_seTimeDown.Play();
 	}
 }
