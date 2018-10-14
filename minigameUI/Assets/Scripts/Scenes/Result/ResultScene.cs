@@ -8,7 +8,7 @@ public class ResultScene : MonoBehaviour {
 	{
 		public bool _IsComplete = false;
 		public List<float> _secondList = new List<float>();
-		public int m_killCount = 0;
+		public List<int> m_killList = new List<int>();
 	}
 
 	ReusltData _reusltData;

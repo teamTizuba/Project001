@@ -21,6 +21,8 @@ public class GameMainScene : MonoBehaviour
 	Image m_mychara;
 	Image m_enemy;
 	Image m_action;
+	GameObject m_downTimeObj = null;
+	Animation m_downTimeAnim = null;
 	Animation m_mycharaAnimation;
 	Animation m_enemyAnimation;
 	Text m_gameTimeText;
@@ -39,6 +41,9 @@ public class GameMainScene : MonoBehaviour
 		m_action = canvas.transform.Find("Action").GetComponent<Image>();
 		m_gameTimeText = canvas.transform.Find("GameTime").GetComponent<Text>();
 		m_enemy.sprite = Resources.Load<Sprite>(GameData.dataArray[m_charaIndex].resourceName);
+		m_downTimeObj = canvas.transform.Find("DownTime").gameObject;
+		m_downTimeAnim = m_downTimeObj.GetComponent<Animation>();
+		m_charaIndex = Random.RandomRange(0, GameData.dataArray.Length);
 	}
 
 	// Update is called once per frame
@@ -65,15 +70,24 @@ public class GameMainScene : MonoBehaviour
 		m_gameTime -= Time.deltaTime;
 		if (m_gameTime < 0f) {
 			SystemManager.GetInstance().LoadScene("ResultScene");
+			m_gameTimeText.text = 0.00f.ToString();
+		} else {
+			m_gameTimeText.text = string.Format("{0:0.00}", m_gameTime);
+			if (m_downTimeObj.active) {
+				if (m_downTimeAnim.isPlaying == false) {
+					m_downTimeObj.active = false;
+				}
+			}
 		}
-		m_gameTimeText.text = string.Format("{0:0.00}", m_gameTime);
-		//m_gameTimeText.text = m_gameTime.ToString();
 	}
 
 	void UpdateLoad()
 	{
 		m_enemyAnimation.Play("EnemyAppear");
 		m_state = eState.Appear;
+		if (MyInput.GetInstance().IsTouchTrigger()) {
+			DownTime();
+		}
 	}
 	void UpdateAppear()
 	{
@@ -81,6 +95,10 @@ public class GameMainScene : MonoBehaviour
 			m_timeLimit = Random.RandomRange(GameData.actionMin, GameData.actionMax);
 			m_timer = 0f;
 			m_state = eState.PreButtle;
+			return;
+		}
+		if (MyInput.GetInstance().IsTouchTrigger()) {
+			DownTime();
 		}
 	}
 	void UpdatePreButtle()
@@ -90,10 +108,10 @@ public class GameMainScene : MonoBehaviour
 			m_action.gameObject.SetActive(true);
 			m_state = eState.Buttle;
 			m_timer = 0f;
-		} else {
-			if (MyInput.GetInstance().IsTouchTrigger()) {
-				m_gameTime -= 5f;
-			}
+			return;
+		}
+		if (MyInput.GetInstance().IsTouchTrigger()) {
+			DownTime();
 		}
 	}
 
@@ -105,11 +123,14 @@ public class GameMainScene : MonoBehaviour
 			m_enemyAnimation.Play("EnemyDown");
 			m_action.gameObject.SetActive(false);
 			m_state = eState.EnemyDown;
-			m_resultData.m_killCount++;
+			m_resultData.m_killList.Add(m_charaIndex);
 		}
 	}
 	void UpdateEnemyDown()
 	{
+		if (MyInput.GetInstance().IsTouchTrigger()) {
+			DownTime();
+		}
 		if (m_enemyAnimation.isPlaying == false) {
 			int oldIndex = m_charaIndex;
 			m_charaIndex = Random.RandomRange(0, GameData.dataArray.Length);
@@ -123,5 +144,11 @@ public class GameMainScene : MonoBehaviour
 			m_enemy.sprite = Resources.Load<Sprite>(GameData.dataArray[m_charaIndex].resourceName);
 			m_state = eState.Load;
 		}
+	}
+	void DownTime()
+	{
+		m_gameTime -= 5f;
+		m_downTimeObj.active = true;
+		m_downTimeAnim.Play("DownTime");
 	}
 }
