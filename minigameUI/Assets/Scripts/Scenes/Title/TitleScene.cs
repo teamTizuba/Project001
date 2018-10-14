@@ -8,6 +8,7 @@ public class TitleScene : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Application.targetFrameRate = 60;
+		DontDestroyOnLoad(GameObject.Find("BGM"));
 	}
 	
 	// Update is called once per frame

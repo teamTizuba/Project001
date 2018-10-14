@@ -31,7 +31,6 @@ public class GameMainScene : MonoBehaviour
 	AudioSource m_seAction = null;
 	AudioSource m_seAttack = null;
 	AudioSource m_seTimeDown = null;
-	AudioSource m_bgm = null;
 
 	// Use this for initialization
 	void Start()
@@ -52,7 +51,6 @@ public class GameMainScene : MonoBehaviour
 		m_seAction = audio.Find("SEAction").GetComponent<AudioSource>();
 		m_seAttack = audio.Find("SEAttack").GetComponent<AudioSource>();
 		m_seTimeDown = audio.Find("SETimeDown").GetComponent<AudioSource>();
-		m_bgm = audio.Find("BGM").GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
