@@ -101,14 +101,21 @@ public class GameMainScene : MonoBehaviour
 		if (MyInput.GetInstance().IsTouchTrigger()) {
 			m_enemyAnimation.Play("EnemyDown");
 			m_action.gameObject.SetActive(false);
-			m_charaIndex++;
 			m_state = eState.EnemyDown;
 		}
 	}
 	void UpdateEnemyDown()
 	{
 		if (m_enemyAnimation.isPlaying == false) {
+			int oldIndex = m_charaIndex;
 			m_charaIndex = Random.RandomRange(0, GameData.dataArray.Length);
+			if (oldIndex == m_charaIndex) {
+				if(m_charaIndex < GameData.dataArray.Length - 1) {
+					m_charaIndex++;
+				} else {
+					m_charaIndex = 0;
+				}
+			}
 			m_enemy.sprite = Resources.Load<Sprite>(GameData.dataArray[m_charaIndex].resourceName);
 			m_state = eState.Load;
 		}
