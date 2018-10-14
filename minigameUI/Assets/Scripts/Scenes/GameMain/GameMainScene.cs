@@ -8,20 +8,21 @@ public class GameMainScene : MonoBehaviour
 
 	enum eState
 	{
-		Ready,		// タッチ受付前.
+		Load,		// データ読み込み.
+		Appear,		// 登場演出.
 		PreButtle,	// いつタッチ開始か…？.
 		Buttle,		// 今だ！タッチ!.
-		End			// 終了～.
+		EnemyDown,	// 敵が倒れた.
 	}
-	eState m_state = eState.Ready;
-	float m_timer = 0.0f;
-	float m_timeLimit = 0;
+	eState m_state = eState.Load;
+	float m_timer = 0;
+	float m_timeLimit = 0f;
+	float m_gameTime = 60f;
 	Image m_mychara;
 	Image m_enemy;
 	Image m_action;
-	Image m_win;
-	Image m_lose;
-	Image m_ready;
+	Animation m_enemyAnimation;
+	Text m_gameTimeText;
 	int m_charaIndex = 0;
 	ResultScene.ReusltData m_resultData = new ResultScene.ReusltData();
 
@@ -32,10 +33,9 @@ public class GameMainScene : MonoBehaviour
 		var canvas = GameObject.Find("Canvas");
 		m_mychara = canvas.transform.Find("MyChara").GetComponent<Image>();
 		m_enemy = canvas.transform.Find("Enemy").GetComponent<Image>();
+		m_enemyAnimation = m_enemy.gameObject.GetComponent<Animation>();
 		m_action = canvas.transform.Find("Action").GetComponent<Image>();
-		m_win = canvas.transform.Find("Win").GetComponent<Image>();
-		m_lose = canvas.transform.Find("Lose").GetComponent<Image>();
-		m_ready = canvas.transform.Find("Ready").GetComponent<Image>();
+		m_gameTimeText = canvas.transform.Find("GameTime").GetComponent<Text>();
 		m_enemy.sprite = Resources.Load<Sprite>(GameData.dataArray[m_charaIndex].resourceName);
 	}
 
@@ -44,8 +44,11 @@ public class GameMainScene : MonoBehaviour
 	{
 		SystemManager.GetInstance().Update();
 		switch (m_state) {
-		case eState.Ready:
-			UpdareReady();
+		case eState.Load:
+			UpdateLoad();
+			break;
+		case eState.Appear:
+			UpdateAppear();
 			break;
 		case eState.PreButtle:
 			UpdatePreButtle();
@@ -53,20 +56,29 @@ public class GameMainScene : MonoBehaviour
 		case eState.Buttle:
 			UpdateButtle();
 			break;
-		case eState.End:
-			UpdateEnd();
+		case eState.EnemyDown:
+			UpdateEnemyDown();
 			break;
 		}
+		m_gameTime -= Time.deltaTime;
+		if (m_gameTime < 0f) {
+			SystemManager.GetInstance().LoadScene("ResultScene");
+		}
+		m_gameTimeText.text = string.Format("{0:0.00}", m_gameTime);
+		//m_gameTimeText.text = m_gameTime.ToString();
 	}
 
-	void UpdareReady()
+	void UpdateLoad()
 	{
-		m_timer += Time.deltaTime;
-		if (m_timer >= m_timeLimit) {
+		m_enemyAnimation.Play("EnemyAppear");
+		m_state = eState.Appear;
+	}
+	void UpdateAppear()
+	{
+		if (m_enemyAnimation.isPlaying == false) {
 			m_timeLimit = Random.RandomRange(GameData.actionMin, GameData.actionMax);
 			m_timer = 0f;
 			m_state = eState.PreButtle;
-			m_ready.gameObject.SetActive(false);
 		}
 	}
 	void UpdatePreButtle()
@@ -75,67 +87,30 @@ public class GameMainScene : MonoBehaviour
 		if (m_timer >= m_timeLimit) {
 			m_action.gameObject.SetActive(true);
 			m_state = eState.Buttle;
-			m_timeLimit = Random.RandomRange(GameData.dataArray[m_charaIndex].timeMin, GameData.dataArray[m_charaIndex].timeMax);
 			m_timer = 0f;
 		} else {
 			if (MyInput.GetInstance().IsTouchTrigger()) {
-				m_lose.gameObject.SetActive(true);
-				m_timer = 0f;
-				m_timeLimit = 5.0f;
-				m_charaIndex++;
-				m_state = eState.End;
+				m_gameTime -= 5f;
 			}
 		}
 	}
 
 	void UpdateButtle()
 	{
-		bool isEnd = false;
-		bool isWin = false;
 		m_timer += Time.deltaTime;
 		if (MyInput.GetInstance().IsTouchTrigger()) {
-			isWin = true;
-			isEnd = true;
-		} else if (m_timer >= m_timeLimit) {
-			isEnd = true;
-		}
-
-		if (isEnd) {
-			m_mychara.transform.localPosition = new Vector3(m_mychara.transform.localPosition.x, 200f, m_mychara.transform.localPosition.z);
-			m_enemy.transform.localPosition = new Vector3(m_mychara.transform.localPosition.x, -150f, m_mychara.transform.localPosition.z);
-			if (isWin) {
-				m_resultData._secondList.Add(m_timer);
-				m_win.gameObject.SetActive(true);
-			} else {
-				m_lose.gameObject.SetActive(true);
-			}
+			m_enemyAnimation.Play("EnemyDown");
 			m_action.gameObject.SetActive(false);
 			m_charaIndex++;
-			m_timer = 0f;
-			m_timeLimit = 5.0f;
-			m_state = eState.End;
+			m_state = eState.EnemyDown;
 		}
 	}
-	void UpdateEnd()
+	void UpdateEnemyDown()
 	{
-		m_timer += Time.deltaTime;
-		if (m_timer >= m_timeLimit) {
-			if(m_charaIndex >= GameData.dataArray.Length || m_resultData._secondList.Count!=m_charaIndex) {
-				m_resultData._IsComplete = m_resultData._secondList.Count == m_charaIndex;
-				SystemManager.GetInstance().SetSceneData(m_resultData);
-				SystemManager.GetInstance().LoadScene("ResultScene");
-			} else {
-				m_win.gameObject.SetActive(false);
-				m_lose.gameObject.SetActive(false);
-				m_action.gameObject.SetActive(false);
-				m_ready.gameObject.SetActive(true);
-				m_state = eState.Ready;
-				m_timer = 0f;
-				m_timeLimit = 3f;
-				m_mychara.transform.localPosition = new Vector3(m_mychara.transform.localPosition.x, -200f, m_mychara.transform.localPosition.z);
-				m_enemy.transform.localPosition = new Vector3(m_mychara.transform.localPosition.x, 250f, m_mychara.transform.localPosition.z);
-				m_enemy.sprite = Resources.Load<Sprite>(GameData.dataArray[m_charaIndex].resourceName);
-			}
+		if (m_enemyAnimation.isPlaying == false) {
+			m_charaIndex = Random.RandomRange(0, GameData.dataArray.Length);
+			m_enemy.sprite = Resources.Load<Sprite>(GameData.dataArray[m_charaIndex].resourceName);
+			m_state = eState.Load;
 		}
 	}
 }

@@ -8,20 +8,10 @@ static public class GameData{
 		/// 画像の名前.
 		/// </summary>
 		public string resourceName = string.Empty;
-		/// <summary>
-		/// 攻撃までの時間(最小)　秒.
-		/// </summary>
-		public float timeMin = 0f;
-		/// <summary>
-		/// 攻撃までの時間(最大)　秒.
-		/// </summary>
-		public float timeMax = 0f;
 
-		public Data(string a, float b, float c)
+		public Data(string a)
 		{
 			resourceName = a;
-			timeMin = b;
-			timeMax = c;
 		}
 	}
 
@@ -31,23 +21,17 @@ static public class GameData{
 	public static Data[] dataArray = new Data[]
 	{
 		new Data(
-			"GameMain/Enemy001",
-			1f,
-			2f
+			"GameMain/Enemy001"
 			),
 		new Data(
-			"GameMain/Enemy002",
-			0.5f,
-			1f
+			"GameMain/Enemy002"
 			),
 		new Data(
-			"GameMain/Enemy003",
-			0.2f,
-			0.4f
+			"GameMain/Enemy003"
 			)
 	};
 
 	// ビックリマークが出る前の時間.
-	public static float actionMin = 4f;
-	public static float actionMax = 8f;
+	public static float actionMin = 0.2f;
+	public static float actionMax = 1f;
 }

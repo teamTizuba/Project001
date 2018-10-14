@@ -3,3 +3,5 @@ Temp/
 .vs/
 *.sln
 *.csproj
+Rom/
+minigameUI/obj/
