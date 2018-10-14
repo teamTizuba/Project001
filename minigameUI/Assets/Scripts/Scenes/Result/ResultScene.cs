@@ -15,7 +15,17 @@ public class ResultScene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		SystemManager.GetInstance().Update();
 		var reusltData = SystemManager.GetInstance().GetSceneData() as ReusltData;
+
+		if( reusltData == null )
+		{
+			reusltData = new ReusltData();
+			for( int i = 0 ; i < 20 ; i++ )
+			{
+				reusltData.m_killList.Add( i % GameData.dataArray.Length );
+			}
+		}
 
 		_resultUI.Init( this , reusltData );
 	}
