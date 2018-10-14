@@ -69,6 +69,7 @@ public class GameMainScene : MonoBehaviour
 		}
 		m_gameTime -= Time.deltaTime;
 		if (m_gameTime < 0f) {
+			SystemManager.GetInstance().SetSceneData( m_resultData );
 			SystemManager.GetInstance().LoadScene("ResultScene");
 			m_gameTimeText.text = 0.00f.ToString();
 		} else {

@@ -6,6 +6,10 @@ public class MyInput : Singleton<MyInput>
 	bool _isTrigger = false;
 	bool _isRelease = false;
 
+	protected override bool IsAddManager()
+	{
+		return false;
+	}
 	public void Update()
 	{
 		bool isPressNext = false;
@@ -16,7 +20,6 @@ public class MyInput : Singleton<MyInput>
 			{
 				isPressNext = true;
 			}
-			isPressNext = false;
 		} else
 		{
 			//PC
@@ -31,9 +34,14 @@ public class MyInput : Singleton<MyInput>
 
 	bool IsSmartPhone()
 	{
-		return Application.platform == RuntimePlatform.Android ||
-			Application.platform == RuntimePlatform.IPhonePlayer;
-
+#if UNITY_EDITOR
+		return false;
+#elif UNITY_IPHONE
+		return true;
+#elif UNITY_ANDROID
+		return true;
+#endif
+		return false;
 	}
 
 	public bool IsTouch()
