@@ -102,6 +102,7 @@ public class GameMainScene : MonoBehaviour
 			m_enemyAnimation.Play("EnemyDown");
 			m_action.gameObject.SetActive(false);
 			m_state = eState.EnemyDown;
+			m_resultData.m_killCount++;
 		}
 	}
 	void UpdateEnemyDown()
