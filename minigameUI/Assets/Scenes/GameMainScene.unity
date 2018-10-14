@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 33376068}
   - component: {fileID: 33376070}
   - component: {fileID: 33376069}
+  - component: {fileID: 33376071}
   m_Layer: 5
   m_Name: MyChara
   m_TagString: Untagged
@@ -182,6 +183,21 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 33376067}
   m_CullTransparentMesh: 0
+--- !u!111 &33376071
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 33376067}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 0b45fb40f18daec4c96e1c771a09a7ec, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &168782731
 GameObject:
   m_ObjectHideFlags: 0

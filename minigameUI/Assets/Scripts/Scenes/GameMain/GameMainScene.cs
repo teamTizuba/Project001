@@ -21,6 +21,7 @@ public class GameMainScene : MonoBehaviour
 	Image m_mychara;
 	Image m_enemy;
 	Image m_action;
+	Animation m_mycharaAnimation;
 	Animation m_enemyAnimation;
 	Text m_gameTimeText;
 	int m_charaIndex = 0;
@@ -32,6 +33,7 @@ public class GameMainScene : MonoBehaviour
 		m_timeLimit = 3f;
 		var canvas = GameObject.Find("Canvas");
 		m_mychara = canvas.transform.Find("MyChara").GetComponent<Image>();
+		m_mycharaAnimation = m_mychara.gameObject.GetComponent<Animation>();
 		m_enemy = canvas.transform.Find("Enemy").GetComponent<Image>();
 		m_enemyAnimation = m_enemy.gameObject.GetComponent<Animation>();
 		m_action = canvas.transform.Find("Action").GetComponent<Image>();
@@ -99,6 +101,7 @@ public class GameMainScene : MonoBehaviour
 	{
 		m_timer += Time.deltaTime;
 		if (MyInput.GetInstance().IsTouchTrigger()) {
+			m_mycharaAnimation.Play("MyCharaAttack");
 			m_enemyAnimation.Play("EnemyDown");
 			m_action.gameObject.SetActive(false);
 			m_state = eState.EnemyDown;
