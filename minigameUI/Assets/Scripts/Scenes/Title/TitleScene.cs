@@ -5,20 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class TitleScene : MonoBehaviour {
 
+	TitleUI _titleUI = new TitleUI();
+
 	// Use this for initialization
 	void Start () {
+		SystemManager.GetInstance().Update();
 		Application.targetFrameRate = 60;
 		DontDestroyOnLoad(GameObject.Find("BGM"));
+		SystemManager.GetInstance().Update();
+
+		_titleUI.Init( this );
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		SystemManager.GetInstance().Update();
-
-		if( MyInput.GetInstance().IsTouchTrigger() )
-		{
-			SystemManager.GetInstance().LoadScene( "GameMainScene" );
-		}
+		_titleUI.Update();
 	}
 
 
