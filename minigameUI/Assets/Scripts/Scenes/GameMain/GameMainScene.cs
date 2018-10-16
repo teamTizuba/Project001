@@ -40,6 +40,7 @@ public class GameMainScene : MonoBehaviour
 		for (int i = 0; i < GameData.dataArray.Length; ++i) {
 			m_animalSprites.Add(Resources.Load<Sprite>(GameData.dataArray[i].resourceName));
 		}
+		m_charaIndex = Random.RandomRange(0, GameData.dataArray.Length);
 
 		var canvas = GameObject.Find("Canvas");
 		m_mychara = canvas.transform.Find("MyChara").GetComponent<Image>();
@@ -51,11 +52,11 @@ public class GameMainScene : MonoBehaviour
 		m_enemy.sprite = m_animalSprites[m_charaIndex];
 		m_downTimeObj = canvas.transform.Find("DownTime").gameObject;
 		m_downTimeAnim = m_downTimeObj.GetComponent<Animation>();
-		m_charaIndex = Random.RandomRange(0, GameData.dataArray.Length);
 		var audio = GameObject.Find("Audio").transform;
 		m_seAction = audio.Find("SEAction").GetComponent<AudioSource>();
 		m_seAttack = audio.Find("SEAttack").GetComponent<AudioSource>();
 		m_seTimeDown = audio.Find("SETimeDown").GetComponent<AudioSource>();
+
 	}
 
 	// Update is called once per frame
