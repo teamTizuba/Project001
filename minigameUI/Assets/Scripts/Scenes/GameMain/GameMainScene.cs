@@ -31,11 +31,16 @@ public class GameMainScene : MonoBehaviour
 	AudioSource m_seAction = null;
 	AudioSource m_seAttack = null;
 	AudioSource m_seTimeDown = null;
+	List<Sprite> m_animalSprites = new List<Sprite>();
 
 	// Use this for initialization
 	void Start()
 	{
 		m_timeLimit = 3f;
+		for (int i = 0; i < GameData.dataArray.Length; ++i) {
+			m_animalSprites.Add(Resources.Load<Sprite>(GameData.dataArray[i].resourceName));
+		}
+
 		var canvas = GameObject.Find("Canvas");
 		m_mychara = canvas.transform.Find("MyChara").GetComponent<Image>();
 		m_mycharaAnimation = m_mychara.gameObject.GetComponent<Animation>();
@@ -43,7 +48,7 @@ public class GameMainScene : MonoBehaviour
 		m_enemyAnimation = m_enemy.gameObject.GetComponent<Animation>();
 		m_action = canvas.transform.Find("Action").GetComponent<Image>();
 		m_gameTimeText = canvas.transform.Find("GameTime").GetComponent<Text>();
-		m_enemy.sprite = Resources.Load<Sprite>(GameData.dataArray[m_charaIndex].resourceName);
+		m_enemy.sprite = m_animalSprites[m_charaIndex];
 		m_downTimeObj = canvas.transform.Find("DownTime").gameObject;
 		m_downTimeAnim = m_downTimeObj.GetComponent<Animation>();
 		m_charaIndex = Random.RandomRange(0, GameData.dataArray.Length);
@@ -151,7 +156,7 @@ public class GameMainScene : MonoBehaviour
 					m_charaIndex = 0;
 				}
 			}
-			m_enemy.sprite = Resources.Load<Sprite>(GameData.dataArray[m_charaIndex].resourceName);
+			m_enemy.sprite = m_animalSprites[m_charaIndex];
 			m_state = eState.Load;
 		}
 	}
