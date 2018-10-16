@@ -7,11 +7,17 @@ public class TitleScene : MonoBehaviour {
 
 	TitleUI _titleUI = new TitleUI();
 
+	static bool existBgm = false;
 	// Use this for initialization
 	void Start () {
 		SystemManager.GetInstance().Update();
 		Application.targetFrameRate = 60;
-		DontDestroyOnLoad(GameObject.Find("BGM"));
+		if (existBgm == false) {
+			var bgmPrefab = Resources.Load<GameObject>("GameMain/Sound/BGM");
+			var bgmObj = Instantiate(bgmPrefab);
+			DontDestroyOnLoad(bgmObj);
+			existBgm = true;
+		}
 		SystemManager.GetInstance().Update();
 
 		_titleUI.Init( this );
