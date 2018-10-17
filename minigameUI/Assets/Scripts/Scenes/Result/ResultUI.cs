@@ -28,22 +28,22 @@ public class ResultUI
 
 		_toTitleObj = canvasObj.transform.Find( "TouchToTitle" ).gameObject;
 		_toTitleObj.SetActive( false );
-		_killText = canvasObj.transform.Find("Kill" ).Find( "numText" ).GetComponent<TextMeshProUGUI>();
+		_killText = canvasObj.transform.Find( "Kill" ).Find( "numText" ).GetComponent<TextMeshProUGUI>();
 
 		var resultCharaBase = Resources.Load<GameObject>( "Result/Chara" );
 		var tempObjList = new List<GameObject>();
 		foreach( var charaId in reusltData.m_killList )
 		{
 			var obj = GameObject.Instantiate<GameObject>( resultCharaBase );
-			obj.transform.SetParent( _charaParent.transform ,false);
+			obj.transform.SetParent( _charaParent.transform , false );
 			obj.transform.localPosition = new Vector3( 0 , 1000 , 0 );
-			obj.transform.rotation = Quaternion.Euler(0,0, UnityEngine.Random.Range( 0 , 8 ) * 45 );
+			obj.transform.rotation = Quaternion.Euler( 0 , 0 , UnityEngine.Random.Range( 0 , 8 ) * 45 );
 			tempObjList.Add( obj );
 		}
 
 		for( int i = 0 ; i < tempObjList.Count ; i++ )
 		{
-			var obj = tempObjList[tempObjList.Count-1 - i];
+			var obj = tempObjList[tempObjList.Count - 1 - i];
 			var resultChara = new ResultChara();
 			resultChara.Init( obj , reusltData.m_killList[i] );
 			_resultCharaList.Add( resultChara );
@@ -104,6 +104,16 @@ public class ResultUI
 
 	IEnumerator AnimCoroutine()
 	{
+		if( true )
+		{
+			var ienumerator = MyUnityAds.GetInstance().ShowCoroutine();
+			while( ienumerator.MoveNext() )
+			{
+				yield return null;
+			}
+		}
+
+
 		int nowDropNum = 0;
 		int dropNumAddFrame = 30;
 		int frame = 0;

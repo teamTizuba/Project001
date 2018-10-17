@@ -28,6 +28,11 @@ public class ResultScene : MonoBehaviour {
 		}
 
 		_resultUI.Init( this , reusltData );
+
+//		MyUnityAds.GetInstance().Show();
+
+//		gameObject.transform.Find( "MyUnityAdsBh" ).GetComponent<MyUnityAdsBh>().Show();
+		
 	}
 	
 	// Update is called once per frame

@@ -10,6 +10,7 @@ public class TitleScene : MonoBehaviour {
 	static bool existBgm = false;
 	// Use this for initialization
 	void Start () {
+		MyUnityAds.GetInstance();
 		SystemManager.GetInstance().Update();
 		Application.targetFrameRate = 60;
 		if (existBgm == false) {

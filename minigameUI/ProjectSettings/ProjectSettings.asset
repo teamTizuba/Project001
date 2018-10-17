@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: kunifuku
-  productName: "\u3042\u306B\u305D\u3093"
+  productName: "\u30DD\u30A4\u3063\u3068\uFF01"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -809,9 +809,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudProjectId: 227596a6-74fd-4fa2-a034-ea1139f60c45
+  projectName: "\u30DD\u30A4\u3063\u3068\uFF01"
+  organizationId: unity_jwe4f95edlomwa
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
