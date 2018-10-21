@@ -152,7 +152,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.kunifuku.animalSong
+    Android: com.kunifuku.poiAnimal
     Standalone: com.Company.ProductName
   buildNumber: {}
   AndroidBundleVersionCode: 1
