@@ -7,7 +7,8 @@ using System.Collections.Generic;
 public class TitleUI
 {
 	MonoBehaviour _monoBehaviour;
-	GameObject _nextObj;
+	Button _nextBtn;
+	Button _tutorialBtn;
 
 	List<DropChara> _frontDropCharaList = new List<DropChara>();
 	List<DropChara> _backDropCharaList = new List<DropChara>();
@@ -15,13 +16,39 @@ public class TitleUI
 	List<int> _dropIndexList = new List<int>();
 
 	bool _isEndAnim = false;
+
+	Tutorial _tutorial = new Tutorial();
+
 	public void Init( MonoBehaviour monoBehaviour )
 	{
 		_monoBehaviour = monoBehaviour;
 		var gameObject = monoBehaviour.gameObject;
 		var canvasObj = gameObject.transform.Find( "Canvas" ).gameObject;
-		_nextObj = canvasObj.transform.Find( "nextText" ).gameObject;
-		_nextObj.SetActive( false );
+		_tutorial.Init( canvasObj.transform.Find( "Tutorial" ).gameObject );
+
+		_nextBtn = canvasObj.transform.Find( "nextBtn" ).GetComponent<Button>();
+		_nextBtn.gameObject.SetActive( false );
+		_nextBtn.onClick.AddListener(()=> {
+			if( SaveDataUtility.GetInstance().GetSaveData()._isEndTutorial )
+			{
+				SystemManager.GetInstance().LoadScene( "GameMainScene" );
+			} else
+			{
+				_tutorial.SetEndAction(()=>{
+					SaveDataUtility.GetInstance().GetSaveData()._isEndTutorial = true;
+					SaveDataUtility.GetInstance().Save();
+					SystemManager.GetInstance().LoadScene( "GameMainScene" );
+				} );
+				_tutorial.Open();
+			}
+		} );
+
+		_tutorialBtn = canvasObj.transform.Find( "tutorialBtn" ).GetComponent<Button>();
+		_tutorialBtn.gameObject.SetActive( false );
+		_tutorialBtn.onClick.AddListener( () => {
+			_tutorial.Open();
+		} );
+
 
 		var charaParentObj = canvasObj.transform.Find( "charaParent" ).gameObject;
 		{
@@ -86,13 +113,6 @@ public class TitleUI
 				);
 			}
 		}
-		if( _isEndAnim )
-		{
-			if( MyInput.GetInstance().IsTouchTrigger() )
-			{
-				SystemManager.GetInstance().LoadScene( "GameMainScene" );
-			}
-		}
 	}
 
 	IEnumerator AnimCoroutine()
@@ -120,7 +140,11 @@ public class TitleUI
 		}
 
 
-		_nextObj.SetActive( true );
+		_nextBtn.gameObject.SetActive( true );
+		if( SaveDataUtility.GetInstance().GetSaveData()._isEndTutorial )
+		{
+			_tutorialBtn.gameObject.SetActive( true );
+		}
 		_isEndAnim = true;
 	}
 
