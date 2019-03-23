@@ -34,3 +34,6 @@ GitHubの設定・Unityの初期設定・作業分担し制作・ストアにア
         http://www.hmix.net/
     - ビックリマーク・敵が飛んでいく・フライング  
         http://www.kurage-kosho.info/
+- フォント
+    - ゲーム説明
+        http://nonty.net/font/amechanpop/
