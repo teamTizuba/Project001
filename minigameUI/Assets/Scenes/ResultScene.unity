@@ -167,7 +167,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "\u305F\u304A\u3057\u305F\u6570"
+  m_text: "\u306A\u304B\u307E\u306B\u3057\u305F\u6570"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d15ee269dbd72ca4c9a6d77e571b8b76, type: 2}
   m_sharedMaterial: {fileID: 21461759409568494, guid: d15ee269dbd72ca4c9a6d77e571b8b76,
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 20518699}
-    characterCount: 5
+    characterCount: 7
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
