@@ -21,10 +21,12 @@ public class GameMainScene : MonoBehaviour
 	Image m_mychara;
 	Image m_enemy;
 	Image m_action;
+	Image m_note;
 	GameObject m_downTimeObj = null;
 	Animation m_downTimeAnim = null;
 	Animation m_mycharaAnimation;
 	Animation m_enemyAnimation;
+	Animation m_noteAnimation;
 	Text m_gameTimeText;
 	int m_charaIndex = 0;
 	ResultScene.ReusltData m_resultData = new ResultScene.ReusltData();
@@ -48,6 +50,8 @@ public class GameMainScene : MonoBehaviour
 		m_enemy = canvas.transform.Find("Enemy").GetComponent<Image>();
 		m_enemyAnimation = m_enemy.gameObject.GetComponent<Animation>();
 		m_action = canvas.transform.Find("Action").GetComponent<Image>();
+		m_note = canvas.transform.Find("Note").GetComponent<Image>();
+		m_noteAnimation = m_note.gameObject.GetComponent<Animation>();
 		m_gameTimeText = canvas.transform.Find("GameTime").GetComponent<Text>();
 		m_enemy.sprite = m_animalSprites[m_charaIndex];
 		m_downTimeObj = canvas.transform.Find("DownTime").gameObject;
@@ -138,6 +142,7 @@ public class GameMainScene : MonoBehaviour
 			m_mycharaAnimation.Play("MyCharaAttack");
 			m_enemyAnimation.Play("EnemyDown");
 			m_action.gameObject.SetActive(false);
+			m_note.gameObject.SetActive(true);
 			m_state = eState.EnemyDown;
 			m_resultData.m_killList.Add(m_charaIndex);
 		}
@@ -146,6 +151,9 @@ public class GameMainScene : MonoBehaviour
 	{
 		if (MyInput.GetInstance().IsTouchTrigger()) {
 			DownTime();
+		}
+		if(m_noteAnimation.isPlaying == false){
+			m_note.gameObject.SetActive(false);
 		}
 		if (m_enemyAnimation.isPlaying == false) {
 			int oldIndex = m_charaIndex;
