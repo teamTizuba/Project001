@@ -104,6 +104,7 @@ public class ResultUI
 
 	IEnumerator AnimCoroutine()
 	{
+		/*
 		if( true )
 		{
 			var ienumerator = MyUnityAds.GetInstance().ShowCoroutine();
@@ -112,6 +113,7 @@ public class ResultUI
 				yield return null;
 			}
 		}
+		*/
 
 
 		int nowDropNum = 0;
