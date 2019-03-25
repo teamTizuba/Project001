@@ -71,6 +71,6 @@ static public class GameData{
 	};
 
 	// ビックリマークが出る前の時間.
-	public static float actionMin = 0.2f;
-	public static float actionMax = 1f;
+	public static float actionMin = 0.1f;
+	public static float actionMax = 0.5f;
 }

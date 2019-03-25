@@ -17,7 +17,7 @@ public class GameMainScene : MonoBehaviour
 	eState m_state = eState.Load;
 	float m_timer = 0;
 	float m_timeLimit = 0f;
-	float m_gameTime = 60f;
+	float m_gameTime = 30f;
 	Image m_mychara;
 	Image m_enemy;
 	Image m_action;
