@@ -142,6 +142,8 @@ public class ResultUI
 			yield return null;
 		}
 
+		_killText.text = _resultCharaList.Count.ToString( "#,0" );
+
 		bool isEndDrop = false;
 		while( ! isEndDrop )
 		{
