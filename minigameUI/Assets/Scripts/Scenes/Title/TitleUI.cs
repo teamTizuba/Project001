@@ -9,6 +9,7 @@ public class TitleUI
 	MonoBehaviour _monoBehaviour;
 	Button _nextBtn;
 	Button _tutorialBtn;
+	Button _privacyBtn;
 
 	List<DropChara> _frontDropCharaList = new List<DropChara>();
 	List<DropChara> _backDropCharaList = new List<DropChara>();
@@ -41,6 +42,12 @@ public class TitleUI
 				} );
 				_tutorial.Open();
 			}
+		} );
+
+		_privacyBtn = canvasObj.transform.Find( "privacyBtn" ).GetComponent<Button>();
+		_privacyBtn.gameObject.SetActive( false );
+		_privacyBtn.onClick.AddListener( () => {
+			Application.OpenURL( "https://kunifukucompany.wixsite.com/website" );
 		} );
 
 		_tutorialBtn = canvasObj.transform.Find( "tutorialBtn" ).GetComponent<Button>();
@@ -144,6 +151,7 @@ public class TitleUI
 		if( SaveDataUtility.GetInstance().GetSaveData()._isEndTutorial )
 		{
 			_tutorialBtn.gameObject.SetActive( true );
+			_privacyBtn.gameObject.SetActive( true );
 		}
 		_isEndAnim = true;
 	}
